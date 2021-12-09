@@ -86,8 +86,21 @@ then
         echo "-- Unknown Debian system [${OS_VER} / ${OS_VER_MAJOR}]."
         exit 1    
     fi
+elif [ "$OS" == "fedora" ]
+then
+    echo "-- Fedora detected; installing required libraries"
+    sudo dnf install git gtk-doc gobject-introspection libgudev-devel libusb1-devel autoconf libtool gettext
+    set_current_upowerd
+    if [ ${OS_VER_MAJOR} -ge 35 ]
+    then
+        PATH_UPOWERD="/usr/libexec"
+        PATH_UPOWER="/usr/bin"
+    else
+        echo "-- Untested Fedora system [${OS_VER} / ${OS_VER_MAJOR}]."
+        exit 1
+    fi
 else
-    echo "-- Unknown system; this script was only tested on ubuntu and manjaro."
+    echo "-- Unknown system; this script was only tested on ubuntu, manjaro and fedora."
     exit 1
 fi
 echo "---------------------------------------------------------------------------"
